@@ -1,6 +1,6 @@
 {
   "name": "archdatapostgresql",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0-alpha.7",
   "description": "Providing Data Stores using PostgreSQL",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -27,14 +27,13 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "prepublishOnly": "npm i && npm run build"
   },
-  "author": "Architecode Corporation",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/opendatastores/archdatapostgresql"
   },
   "dependencies": {
-    "archdatacore": "^3.0.0-alpha.4",
+    "archdatacore": "^3.0.0-alpha.7",
     "pg": "^7.8.0",
     "uuid": "^3.3.2"
   },
