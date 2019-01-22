@@ -90,12 +90,12 @@ describe("buildDataContext.ts tests", () => {
       });
     });
 
-    describe("#DataContext.queryItem()", () => {
+    describe("#DataContext.queryByID()", () => {
       it("expect to query an item by id", async () => {
         // arranges
 
         // acts
-        const result = await dataContext.queryItem("sample", testItem._id);
+        const result = await dataContext.queryByID("sample", testItem._id);
 
         // asserts
         expect(result).to.deep.equal(testItem);
@@ -105,14 +105,14 @@ describe("buildDataContext.ts tests", () => {
         // arranges
 
         // acts
-        const result = await dataContext.queryItem("sample", "11111");
+        const result = await dataContext.queryByID("sample", "11111");
 
         // asserts
         expect(result).to.equal(undefined);
       });
     });
 
-    describe("#DataContext.removeItem()", () => {
+    describe("#DataContext.removeByID()", () => {
       it("expect to remove an item by id", async () => {
         // arranges
         const expected = {
@@ -120,7 +120,7 @@ describe("buildDataContext.ts tests", () => {
         };
 
         // acts
-        const result = await dataContext.removeItem("sample", testItem._id);
+        const result = await dataContext.removeByID("sample", testItem._id);
 
         // asserts
         expect(result).to.deep.equal(expected);
@@ -134,7 +134,7 @@ describe("buildDataContext.ts tests", () => {
         };
 
         // acts
-        const result = await dataContext.removeItem("sample", id);
+        const result = await dataContext.removeByID("sample", id);
 
         // asserts
         expect(result).to.deep.equal(expected);
@@ -216,19 +216,19 @@ describe("buildDataContext.ts tests", () => {
       });
     });
 
-    describe("#Repository.queryItem()", () => {
+    describe("#Repository.queryByID()", () => {
       it("expect to query an item by id", async () => {
         // arranges
 
         // acts
-        const result = await repository.queryItem(testItem._id);
+        const result = await repository.queryByID(testItem._id);
 
         // asserts
         expect(result).to.deep.equal(testItem);
       });
     });
 
-    describe("#Repository.removeItem()", () => {
+    describe("#Repository.removeByID()", () => {
       it("expect to remove an item by id", async () => {
         // arranges
         const expected = {
@@ -236,7 +236,7 @@ describe("buildDataContext.ts tests", () => {
         };
 
         // acts
-        const result = await repository.removeItem(testItem._id);
+        const result = await repository.removeByID(testItem._id);
 
         // asserts
         expect(result).to.deep.equal(expected);
@@ -250,7 +250,7 @@ describe("buildDataContext.ts tests", () => {
         };
 
         // acts
-        const result = await repository.removeItem(id);
+        const result = await repository.removeByID(id);
 
         // asserts
         expect(result).to.deep.equal(expected);

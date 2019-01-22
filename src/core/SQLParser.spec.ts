@@ -24,7 +24,7 @@ describe("SQLParser.ts tests", () => {
   });
 
   describe("#SQLParser.insertObject()", () => {
-    it("expect to parse from an object", () => {
+    it("expect to parse sql from an object", () => {
       // arranges
       const obj = {
         fname: "First Name",
@@ -44,7 +44,7 @@ describe("SQLParser.ts tests", () => {
   });
 
   describe("#SQLParser.queryByID()", () => {
-    it("expect to parse from an object", () => {
+    it("expect to parse sql for querying an object", () => {
       // arranges
       const expected = {
         text: "SELECT * FROM test WHERE _id = $1",
@@ -53,6 +53,22 @@ describe("SQLParser.ts tests", () => {
 
       // acts
       const result = SQLParser.queryByID("test", "11111");
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+  });
+
+  describe("#SQLParser.removeByID()", () => {
+    it("expect to parse sql for removing an object", () => {
+      // arranges
+      const expected = {
+        text: "DELETE FROM test WHERE _id = $1",
+        values: ["11111"],
+      };
+
+      // acts
+      const result = SQLParser.removeByID("test", "11111");
 
       // asserts
       expect(result).to.deep.equal(expected);

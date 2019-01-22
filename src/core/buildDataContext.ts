@@ -1,6 +1,7 @@
 import { IDataContext } from "archdatacore";
 import * as uuid from "uuid";
 import { IPostgreSQLDataConfig } from "../IPostgreSQLDataConfig";
+import { IPostgreSQLOptions } from "../IPostgreSQLOptions";
 import { DBClient } from "./DBClient";
 import { SQLParser } from "./SQLParser";
 
@@ -10,7 +11,7 @@ export const buildDataContext = (config: IPostgreSQLDataConfig): IDataContext =>
 
     const dataContext: IDataContext = {
       close: () => client.end(),
-      createItem: async (collection, item, options) => {
+      createItem: async (collection, item, options = {}) => {
         const { text, values } = SQLParser.insertObject(collection, item, options);
         const result = await client.query(text, values);
 
@@ -18,24 +19,36 @@ export const buildDataContext = (config: IPostgreSQLDataConfig): IDataContext =>
       },
       db: () => Promise.resolve(client),
       newID: () => uuid.v4(),
-      queryItem: async (collection, id, options) => {
+      queryByID: async (collection, id, options = {}) => {
         const { text, values } = SQLParser.queryByID(collection, id, options);
         const { rows } = await client.query(text, values);
+        const item = rows.length > 0 ? rows[0] : undefined;
 
-        return rows.length > 0 ? rows[0] : undefined;
+        if (item === undefined) {
+          return undefined;
+        } else {
+          const { queryParser = (o: any) => o } = options as IPostgreSQLOptions;
+
+          return queryParser(item);
+        }
       },
-      removeItem: async (collection, id, options) => {
+      removeByID: async (collection, id, options = {}) => {
         const { text, values } = SQLParser.removeByID(collection, id, options);
         const result = await client.query(text, values);
 
         return { affected: result.rowCount };
       },
-      toRepository: (collection) => ({
-        collection: () => Promise.resolve(client),
-        createItem: (item, options) => dataContext.createItem(collection, item, options),
-        newID: () => dataContext.newID(),
-        queryItem: (id, options) => dataContext.queryItem(collection, id, options),
-        removeItem: (id, options) => dataContext.removeItem(collection, id, options),
+      toRepository: (collection, defaultOptions = {}) => ({
+        collection: () =>
+          Promise.resolve(client),
+        createItem: (item, options = {}) =>
+          dataContext.createItem(collection, item, Object.assign(options, defaultOptions)),
+        newID: () =>
+          dataContext.newID(),
+        queryByID: (id, options = {}) =>
+          dataContext.queryByID(collection, id, Object.assign(options, defaultOptions)),
+        removeByID: (id, options = {}) =>
+          dataContext.removeByID(collection, id, Object.assign(options, defaultOptions)),
       }),
     };
 

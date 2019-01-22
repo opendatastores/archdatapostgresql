@@ -1,3 +1,5 @@
+import { IPostgreSQLOptions } from "../IPostgreSQLOptions";
+
 export const SQLParser = {
   insertObject: (collection: string, obj: object, options?: any) => {
     const { columns, orders, values } = SQLParser.parseFromObject(obj);
@@ -16,15 +18,19 @@ export const SQLParser = {
       values: keys.map((each) => obj[each]),
     };
   },
-  queryByID: (collection: string, id: string, options?: any) => {
+  queryByID: (collection: string, id: string, options: any = {}) => {
+    const { queryIDName = "_id" } = options as IPostgreSQLOptions;
+
     return {
-      text: `SELECT * FROM ${collection} WHERE _id = $1`,
+      text: `SELECT * FROM ${collection} WHERE ${queryIDName} = $1`,
       values: [id],
     };
   },
-  removeByID: (collection: string, id: string, options?: any) => {
+  removeByID: (collection: string, id: string, options: any = {}) => {
+    const { queryIDName = "_id" } = options as IPostgreSQLOptions;
+
     return {
-      text: `DELETE FROM ${collection} WHERE _id = $1`,
+      text: `DELETE FROM ${collection} WHERE ${queryIDName} = $1`,
       values: [id],
     };
   },
