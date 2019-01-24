@@ -1,9 +1,14 @@
 import { expect } from "chai";
+import * as sinon from "sinon";
 import { IPostgreSQLDataConfig } from "../IPostgreSQLDataConfig";
 import { buildDataContext } from "./buildDataContext";
 
 describe("buildDataContext.ts tests", () => {
   const testConfig: IPostgreSQLDataConfig = {
+    admin: {
+      password: "postgres",
+      user: "postgres",
+    },
     database: "test",
     host: "localhost",
     password: "postgres",
@@ -18,23 +23,47 @@ describe("buildDataContext.ts tests", () => {
 
   const dataContext = buildDataContext(testConfig);
 
-  after(() => dataContext.close());
+  before(async () => {
+    await dataContext.adminQueries.createDB("test");
+    const db = await dataContext.db();
+    const sql = `CREATE TABLE sample (
+      "_id" varchar NULL,
+      "date" timestamp NULL,
+      CONSTRAINT sample_pk PRIMARY KEY ("_id")
+    );`;
+
+    await db.query(sql);
+  });
+
+  after(async () => {
+    await dataContext.close("client");
+    await dataContext.adminQueries.dropDB("test");
+    await dataContext.close("admin");
+  });
 
   describe("#DataContext", () => {
-    before(async () => {
-      const db = await dataContext.db();
-      const sql = `CREATE TABLE sample (
-        "_id" varchar NULL,
-        "date" timestamp NULL,
-        CONSTRAINT sample_pk PRIMARY KEY ("_id")
-      );`;
-      await db.query(sql);
-    });
+    describe("#DataContext.admin()", () => {
+      it("expect to resolve the database instance as admin, #1", async () => {
+        // arranges
 
-    after(async () => {
-      const db = await dataContext.db();
-      const sql = "DROP TABLE sample";
-      await db.query(sql);
+        // acts
+        const db = await dataContext.admin();
+
+        // asserts
+        expect(db).not.to.equal(null);
+        expect(db).not.to.equal(undefined);
+      });
+
+      it("expect to resolve the database instance as admin, #2", async () => {
+        // arranges
+
+        // acts
+        const db1 = await dataContext.admin();
+        const db2 = await dataContext.admin();
+
+        // asserts
+        expect(db1).to.equal(db2);
+      });
     });
 
     describe("#DataContext.db()", () => {
@@ -61,8 +90,24 @@ describe("buildDataContext.ts tests", () => {
       });
     });
 
+    describe("#DataContext.close()", () => {
+      it("expect to close the database pool", async () => {
+        // arranges
+        const db = await dataContext.db();
+        const total = db.totalCount;
+
+        // acts
+        await dataContext.close();
+        const closedTotal = db.totalCount;
+
+        // asserts
+        expect(total).to.equal(1);
+        expect(closedTotal).to.equal(0);
+      });
+    });
+
     describe("#DataContext.newID()", () => {
-      it("expect to create a new ID", () => {
+      it("expect to create a new ID using default function", () => {
         // arranges
 
         // acts
@@ -72,6 +117,19 @@ describe("buildDataContext.ts tests", () => {
         // asserts
         expect(id).not.to.equal(null);
         expect(id).not.to.equal(undefined);
+      });
+
+      it("expect to create a new ID by passing through config", () => {
+        // arranges
+        const newIDFunc = sinon.stub().callsFake(() => "12345");
+        const config = { newIDFunc };
+        const context = buildDataContext(config);
+
+        // acts
+        const id = context.newID();
+
+        // asserts
+        expect(id).to.equal("12345");
       });
     });
 
@@ -157,22 +215,6 @@ describe("buildDataContext.ts tests", () => {
 
   describe("#Repository", () => {
     const repository = dataContext.toRepository("sample");
-
-    before(async () => {
-      const db = await dataContext.db();
-      const sql = `CREATE TABLE sample (
-        "_id" varchar NULL,
-        "date" timestamp NULL,
-        CONSTRAINT sample_pk PRIMARY KEY ("_id")
-      );`;
-      await db.query(sql);
-    });
-
-    after(async () => {
-      const db = await dataContext.db();
-      const sql = "DROP TABLE sample";
-      await db.query(sql);
-    });
 
     describe("#Repository.collection()", () => {
       it("expect to resolve the collection instance", async () => {
