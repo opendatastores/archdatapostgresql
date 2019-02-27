@@ -1,6 +1,6 @@
 {
   "name": "archdatapostgresql",
-  "version": "3.0.0-alpha.26",
+  "version": "3.0.0-alpha.29",
   "description": "Providing Data Stores using PostgreSQL",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -25,12 +25,12 @@
     "test-mocha-cvr": "nyc mocha lib --recursive",
     "coverage": "npm run coveralls",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "prepublishOnly": "npm i && npm run build"
+    "prepublishOnly": "npm i && npm run build && npm run aftertests"
   },
   "license": "MIT",
   "repository": "git+https://github.com/opendatastores/archdatapostgresql",
   "dependencies": {
-    "archdatacore": "^3.0.0-alpha.26",
+    "archdatacore": "^3.0.0-alpha.29",
     "pg": "^7.8.1",
     "uuid": "^3.3.2"
   },
