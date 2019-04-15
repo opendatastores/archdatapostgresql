@@ -1,7 +1,7 @@
 import { IDataConnector } from "archdatacore";
 import { buildDataContext } from "./core/buildDataContext";
-import { IPostgreSQLDataConfig } from "./IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "./IPostgreSQLConnectorConfig";
 
-export const DataConnector: IDataConnector = (config: IPostgreSQLDataConfig) => () => buildDataContext(config);
+export const DataConnector: IDataConnector = (config: IPostgreSQLConnectorConfig) => () => buildDataContext(config);
 
 Object.freeze(DataConnector);

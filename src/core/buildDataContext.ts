@@ -1,13 +1,13 @@
 import * as uuid from "uuid";
-import { IPostgreSQLDataConfig } from "../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../IPostgreSQLConnectorConfig";
 import { IPostgreSQLDataContext } from "../IPostgreSQLDataContext";
 import { IPostgreSQLOptions } from "../IPostgreSQLOptions";
 import { createDBAdmin } from "./connection/createDBAdmin";
 import { createDBClientPool } from "./connection/createDBClientPool";
 import { SQLParser } from "./SQLParser";
 
-export const buildDataContext = (config: IPostgreSQLDataConfig): IPostgreSQLDataContext =>
-  ((Config: IPostgreSQLDataConfig): IPostgreSQLDataContext => {
+export const buildDataContext = (config: IPostgreSQLConnectorConfig): IPostgreSQLDataContext =>
+  ((Config: IPostgreSQLConnectorConfig): IPostgreSQLDataContext => {
     const adminProxy = createDBAdmin(Config);
     const clientPoolProxy = createDBClientPool(Config);
 

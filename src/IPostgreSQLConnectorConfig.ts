@@ -1,4 +1,4 @@
-export interface IPostgreSQLDataConfig {
+export interface IPostgreSQLConnectorConfig {
   connectionString?: string;
   host?: string;
   port?: number;

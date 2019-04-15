@@ -1,12 +1,12 @@
 import { expect } from "chai";
-import { IPostgreSQLDataConfig } from "../../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../../IPostgreSQLConnectorConfig";
 import { createDBClientPool } from "./createDBClientPool";
 
 describe("createDBClientPool.ts tests", () => {
   describe("#createDBClientPool", () => {
     it("expect to create the database instance, #1", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {
+      const config: IPostgreSQLConnectorConfig = {
         database: "test",
         host: "localhost",
         password: "postgres",
@@ -25,7 +25,7 @@ describe("createDBClientPool.ts tests", () => {
 
     it("expect to create the database instance, #2", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {};
+      const config: IPostgreSQLConnectorConfig = {};
 
       // acts
       const proxy = createDBClientPool(config);
@@ -39,7 +39,7 @@ describe("createDBClientPool.ts tests", () => {
 
     it("expect to create the database instance, #3", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {
+      const config: IPostgreSQLConnectorConfig = {
         connectionString: "test",
       };
 
@@ -55,7 +55,7 @@ describe("createDBClientPool.ts tests", () => {
 
     it("expect to create the database instance, #4", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {
+      const config: IPostgreSQLConnectorConfig = {
         database: "postgres",
         host: "localhost",
         password: "postgres",

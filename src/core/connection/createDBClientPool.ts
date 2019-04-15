@@ -3,7 +3,7 @@ import {
   PoolClient,
   PoolConfig,
 } from "pg";
-import { IPostgreSQLDataConfig } from "../../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../../IPostgreSQLConnectorConfig";
 import { IEndableClient } from "./IEndableClient";
 
 export interface IDBClientPool extends IEndableClient {
@@ -11,7 +11,7 @@ export interface IDBClientPool extends IEndableClient {
   get: () => Pool;
 }
 
-const poolConfig = (config: IPostgreSQLDataConfig): PoolConfig => {
+const poolConfig = (config: IPostgreSQLConnectorConfig): PoolConfig => {
   const result: PoolConfig = {};
 
   if (config.connectionString) {
@@ -29,7 +29,7 @@ const poolConfig = (config: IPostgreSQLDataConfig): PoolConfig => {
   return result;
 };
 
-export const createDBClientPool = (config: IPostgreSQLDataConfig): IDBClientPool => ((
+export const createDBClientPool = (config: IPostgreSQLConnectorConfig): IDBClientPool => ((
   Config,
 ): IDBClientPool => {
   let PoolInstance: Pool | undefined;

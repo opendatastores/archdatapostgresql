@@ -1,5 +1,5 @@
 import { DataConnector } from "./DataConnector";
-export { IPostgreSQLDataConfig } from "./IPostgreSQLDataConfig";
+export { IPostgreSQLConnectorConfig } from "./IPostgreSQLConnectorConfig";
 export { IPostgreSQLDataContext } from "./IPostgreSQLDataContext";
 export { IPostgreSQLOptions } from "./IPostgreSQLOptions";
 

@@ -1,12 +1,12 @@
 import { Client, ClientConfig } from "pg";
-import { IPostgreSQLDataConfig } from "../../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../../IPostgreSQLConnectorConfig";
 import { IEndableClient } from "./IEndableClient";
 
 export interface IDBAdmin extends IEndableClient {
   get: () => Promise<Client>;
 }
 
-const adminConfig = (config: IPostgreSQLDataConfig): ClientConfig => {
+const adminConfig = (config: IPostgreSQLConnectorConfig): ClientConfig => {
   const result: ClientConfig = {};
   const { admin } = config;
 
@@ -25,7 +25,7 @@ const adminConfig = (config: IPostgreSQLDataConfig): ClientConfig => {
   return result;
 };
 
-export const createDBAdmin = (config: IPostgreSQLDataConfig): IDBAdmin => ((
+export const createDBAdmin = (config: IPostgreSQLConnectorConfig): IDBAdmin => ((
   Config,
 ): IDBAdmin => {
   let ClientInstance: Client | undefined;

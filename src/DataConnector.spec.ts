@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { DataConnector } from "./DataConnector";
-import { IPostgreSQLDataConfig } from "./IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "./IPostgreSQLConnectorConfig";
 
 describe("DataConnector.ts tests", () => {
-  const testConfig: IPostgreSQLDataConfig = {
+  const config: IPostgreSQLConnectorConfig = {
     database: "test",
     host: "localhost",
     password: "postgres",
@@ -15,7 +15,7 @@ describe("DataConnector.ts tests", () => {
       // arranges
 
       // acts
-      const connect = DataConnector(testConfig);
+      const connect = DataConnector(config);
       const result = connect();
 
       // asserts

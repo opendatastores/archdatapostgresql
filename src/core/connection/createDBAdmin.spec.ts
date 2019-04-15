@@ -1,12 +1,12 @@
 import { expect } from "chai";
-import { IPostgreSQLDataConfig } from "../../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../../IPostgreSQLConnectorConfig";
 import { createDBAdmin } from "./createDBAdmin";
 
 describe("createDBAdmin.ts tests", () => {
   describe("#createDBAdmin", () => {
     it("expect to create the database instance as admin, #1", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {
+      const config: IPostgreSQLConnectorConfig = {
         admin: {
           password: "postgres",
           user: "postgres",
@@ -27,7 +27,7 @@ describe("createDBAdmin.ts tests", () => {
 
     it("expect to throw an error as missing config", async () => {
       // arranges
-      const config: IPostgreSQLDataConfig = {};
+      const config: IPostgreSQLConnectorConfig = {};
 
       // acts
       const proxy = createDBAdmin(config);

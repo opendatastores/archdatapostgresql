@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
-import { IPostgreSQLDataConfig } from "../IPostgreSQLDataConfig";
+import { IPostgreSQLConnectorConfig } from "../IPostgreSQLConnectorConfig";
 import { buildDataContext } from "./buildDataContext";
 
 describe("buildDataContext.ts tests", () => {
-  const testConfig: IPostgreSQLDataConfig = {
+  const testConfig: IPostgreSQLConnectorConfig = {
     admin: {
       password: "postgres",
       user: "postgres",
