@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from "util";
 import * as uuid from "uuid";
 import { IPostgreSQLConnectorConfig } from "../IPostgreSQLConnectorConfig";
 import { IPostgreSQLDataContext } from "../IPostgreSQLDataContext";
@@ -47,9 +48,10 @@ export const buildDataContext = (config: IPostgreSQLConnectorConfig): IPostgreSQ
 
         return { affected: result.rowCount };
       },
-      db: async () => clientPoolProxy.get(),
+      db: async () =>
+        clientPoolProxy.get(),
       newID: () => {
-        if (Config.newIDFunc === undefined) {
+        if (isNullOrUndefined(Config.newIDFunc)) {
           return uuid.v4();
         } else {
           return Config.newIDFunc();
