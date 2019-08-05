@@ -1,6 +1,6 @@
 {
   "name": "archdatapostgresql",
-  "version": "3.0.0-alpha.40",
+  "version": "3.0.0-alpha.42",
   "description": "Providing Data Stores using PostgreSQL",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -30,8 +30,8 @@
   "license": "MIT",
   "repository": "git+https://github.com/opendatastores/archdatapostgresql",
   "dependencies": {
-    "archdatacore": "^3.0.0-alpha.40",
-    "pg": "^7.11.0",
+    "archdatacore": "^3.0.0-alpha.42",
+    "pg": "^7.12.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
     "@types/mock-require": "^2.0.0",
-    "@types/node": "^12.6.8",
+    "@types/node": "^12.6.9",
     "@types/pg": "^7.4.14",
     "@types/sinon": "^7.0.13",
     "@types/uuid": "^3.4.5",
@@ -49,8 +49,8 @@
     "mock-require": "^3.0.3",
     "nyc": "^14.1.1",
     "shelljs": "^0.8.3",
-    "sinon": "^7.3.2",
-    "source-map-support": "^0.5.12",
+    "sinon": "^7.4.0",
+    "source-map-support": "^0.5.13",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
