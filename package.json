@@ -37,6 +37,6 @@
   "devDependencies": {
     "@types/pg": "^7.11.0",
     "@types/uuid": "^3.4.5",
-    "archdevts": "^0.0.1-alpha.2"
+    "archdevts": "^22.4.1"
   }
 }
